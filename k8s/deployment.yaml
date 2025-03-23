@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-tracker
+  namespace: stock-tracker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stock-tracker
+  template:
+    metadata:
+      labels:
+        app: stock-tracker
+    spec:
+      containers:
+      - name: stock-tracker
+        image: your-docker-username/stock-tracker:latest
+        env:
+        - name: DATA_FILE
+          value: /app/data/stock_history.json
+        volumeMounts:
+        - name: stock-data
+          mountPath: /app/data
+      volumes:
+      - name: stock-data
+        persistentVolumeClaim:
+          claimName: stock-tracker-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: stock-tracker-pvc
+  namespace: stock-tracker
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
