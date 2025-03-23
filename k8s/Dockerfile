@@ -9,9 +9,8 @@ COPY requirements.txt .
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy source code
+# Copy only the stock tracker script
 COPY stock_tracker.py .
-COPY stock_visualizer.py .
 
 # Create volume for persistent data
 VOLUME /app/data
@@ -19,5 +18,5 @@ VOLUME /app/data
 # Set environment variables
 ENV DATA_FILE=/app/data/stock_history.json
 
-# Run the tracker by default
+# Run the tracker
 CMD ["python", "stock_tracker.py"]
