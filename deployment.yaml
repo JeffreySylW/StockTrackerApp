@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: stock-tracker
-        image: your-docker-username/stock-tracker:latest
+        image: weaverjs/stock-tracker:latest
         env:
         - name: DATA_FILE
           value: /app/data/stock_history.json

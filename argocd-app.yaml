@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: stock-tracker
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/JeffreySylW/StockTrackerApp.git
+    targetRevision: HEAD
+    path: .  # Point to the root directory instead of k8s
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: stock-tracker
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
